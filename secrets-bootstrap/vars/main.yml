@@ -1,0 +1,7 @@
+---
+# variables expected to be in ansible-vault group_vars/all/vault.yml
+# vault.cloudflare_api_token
+# vault.gitea_admin_password
+# vault.docker_registry_user
+# vault.docker_registry_password
+# vault.docker_registry_server

@@ -1,0 +1,3 @@
+Usage
+- Chiffre `group_vars/all/vault.yml` avec `ansible-vault` et fournis les variables : cloudflare_api_token, gitea_admin_password, docker_registry_user, docker_registry_password, docker_registry_server.
+- Ajoute le rôle dans ton playbooks/site.yml sur run_once: true après ArgoCD / cert-manager namespace existants pour que ArgoCD applications utilisant secrets puissent se synchroniser correctement.

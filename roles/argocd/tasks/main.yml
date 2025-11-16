@@ -1,0 +1,13 @@
+- name: Ensure namespace exists
+  command: kubectl create namespace argocd
+  failed_when: false
+
+- name: Install ArgoCD manifest
+  command: >
+    kubectl apply -n argocd
+    -f https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_version }}/manifests/install.yaml
+
+- name: Wait for argocd-server
+  command: kubectl rollout status deployment/argocd-server -n argocd --timeout=180s
+  register: _roll
+  failed_when: false

@@ -1,0 +1,9 @@
+{
+  "auths": {
+    "{{ vault.docker_registry_server }}": {
+      "username": "{{ vault.docker_registry_user }}",
+      "password": "{{ vault.docker_registry_password }}",
+      "auth": "{{ (vault.docker_registry_user + ':' + vault.docker_registry_password) | b64encode }}"
+    }
+  }
+}

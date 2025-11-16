@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: clusterissuer-letsencrypt-staging
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+  project: default
+  source:
+    repoURL: https://github.com/nntran/rpi-infra-apps.git
+    targetRevision: main
+    path: apps/cert-manager/clusterissuers/staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,16 @@
+---
+cluster_name: rpionprem
+microshift_binary_provided: false
+
+# versions
+argocd_version: v2.11.0
+tekton_version: latest
+
+# ssl
+ingress_class: traefik
+letsencrypt_email: ops@example.com
+letsencrypt_mode: staging
+
+# used by haproxy
+k8s_api_port: 6443
+

@@ -1,0 +1,90 @@
+# ==============================
+# Ansible
+# ==============================
+# Vault secrets
+group_vars/all/vault.yml
+*.secret
+*.env
+
+# Retry files / temporary
+*.retry
+*.retry~
+*.pyc
+__pycache__/
+*.bak
+*.swp
+*.tmp
+
+# Roles / local editor configs
+roles/*/.vscode/
+roles/*/__pycache__/
+
+# ==============================
+# infra-apps / GitOps / Helm
+# ==============================
+# Helm chart caches
+charts/
+*.tgz
+*.lock
+
+# Local overrides / secrets
+apps/*/values.local.yaml
+apps/*/values.secret.yaml
+apps/*/secrets.yaml
+*.secret
+
+# Kubernetes generated files
+*.yaml~
+*.yml~
+*.backup
+*.tmp
+
+# ==============================
+# Docker / container / build
+# ==============================
+# Docker Compose overrides
+docker-compose.override.yml
+docker-compose.override.yaml
+docker-compose.local.yml
+docker-compose.local.yaml
+
+# Docker / Podman logs, env
+*.log
+*.env
+*.pid
+*.sock
+
+# Buildx / multi-arch
+build/
+multiarch/
+bin/
+
+# ==============================
+# GitHub Actions / CI
+# ==============================
+.github/actions/tmp/
+.github/actions/build/
+
+# ==============================
+# IDE / Editor
+# ==============================
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*.bak
+
+# ==============================
+# OS / system
+# ==============================
+.DS_Store
+Thumbs.db
+*.old
+*.orig
+
+# ==============================
+# Logs
+# ==============================
+logs/
+*.log

@@ -1,0 +1,39 @@
+# À faire : remplacer admin.password par secret géré via ArgoCD + SealedSecrets/ExternalSecrets ou via Vault (recommandé).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitea
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/jfelten/gitea-helm-chart'   # ou ton fork
+    targetRevision: 'main'
+    path: .
+    helm:
+      values: |
+        gitea:
+          admin:
+            username: "admin"
+            password: "changeme"    # remplacer / stocker en secret
+        image:
+          pullPolicy: IfNotPresent
+        service:
+          type: ClusterIP
+        persistence:
+          enabled: true
+          size: 10Gi
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitea
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

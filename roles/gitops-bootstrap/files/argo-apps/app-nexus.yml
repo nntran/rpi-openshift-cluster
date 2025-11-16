@@ -1,0 +1,38 @@
+# Sonatype fournit un chart officiel — l’installer via ce chart. Tester l’image sur ARM (selon version, la compatibilité peut varier). 
+# Note ARM : si l’image Nexus officielle ne dispose pas d’un manifest linux/arm64, soit builder une image arm64 (CI), 
+# soit utiliser un autre repository manager (Nexus a de bonnes chances d’être fonctionnel mais vérifier).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nexus
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/sonatype/nxrm3-helm-repository'
+    targetRevision: 'main'
+    path: .
+    helm:
+      values: |
+        replicaCount: 1
+        persistence:
+          enabled: true
+          storageClass: "local-path"
+          size: 50Gi
+        resources:
+          limits:
+            cpu: "1"
+            memory: "2Gi"
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+        env:
+          - name: JAVA_OPTS
+            value: "-Xms512m -Xmx1024m"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nexus
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,19 @@
+# (Prévoir un chart ARM64 — Harbor officiel utilise des images multi-arch.)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: harbor
+  project: default
+  source:
+    repoURL: git@github.com:nntran/rpi-infra-apps.git
+    targetRevision: main
+    path: apps/harbor
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

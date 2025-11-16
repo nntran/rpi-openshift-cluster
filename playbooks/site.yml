@@ -1,0 +1,33 @@
+- name: Bootstrap nodes
+  hosts: all
+  become: true
+  roles:
+    - common
+    - kernel_tune
+    - prereqs
+
+- name: LB with HAProxy
+  hosts: lb
+  become: true
+  roles:
+    - lb_haproxy
+
+- name: Install MicroShift on masters
+  hosts: masters
+  become: true
+  roles:
+    - microshift
+
+- name: Install MicroShift on workers
+  hosts: workers
+  become: true
+  roles:
+    - microshift
+
+- name: Install ArgoCD + bootstrap GitOps (run once)
+  hosts: masters[0]
+  become: true
+  run_once: true
+  roles:
+    - argocd
+    - gitops-bootstrap

@@ -1,0 +1,19 @@
+# Artifactory ne supporte pas ARM64. À remplacer par Nexus OSS (compatible ARM64).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: artifactory
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: artifactory
+  project: default
+  source:
+    repoURL: git@github.com:ton-orga/rpi-infra-apps.git
+    targetRevision: main
+    path: apps/artifactory
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

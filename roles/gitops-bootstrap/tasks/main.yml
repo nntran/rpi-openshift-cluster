@@ -1,0 +1,29 @@
+- name: Copy ArgoCD app manifests
+  copy:
+    src: files/argo-apps/
+    dest: /tmp/argo-apps/
+  delegate_to: localhost
+
+- name: Apply ArgoCD apps
+  command: kubectl apply -f /tmp/argo-apps/
+  retries: 3
+  delay: 5
+  until: result.rc == 0
+  register: result
+
+# Cette tâche lit la variable chiffrée vault.cloudflare_api_token 
+# et crée en clair le secret cloudflare-api-token-secret dans k8s. 
+# Ne commit pas group_vars/all/vault.yml en clair — utiliser ansible-vault et CI sécurisé.
+# - name: Create cloudflare secret in cert-manager namespace
+#   kubernetes.core.k8s:
+#     state: present
+#     definition:
+#       apiVersion: v1
+#       kind: Secret
+#       metadata:
+#         name: cloudflare-api-token-secret
+#         namespace: cert-manager
+#       type: Opaque
+#       stringData:
+#         api-token: "{{ vault.cloudflare_api_token }}"
+#   run_once: true

@@ -1,0 +1,10 @@
+[Unit]
+Description=MicroShift Service
+After=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/microshift
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

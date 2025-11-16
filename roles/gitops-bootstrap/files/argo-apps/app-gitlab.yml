@@ -1,0 +1,21 @@
+# ATTENTION : GitLab ne supporte pas officiellement ARM64 côté container registry, 
+# runners peut-être, mais pas l’instance complète. 
+# Recommande Gitea comme alternative ARM.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitlab
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitlab
+  project: default
+  source:
+    repoURL: git@github.com:ton-orga/rpi-infra-apps.git
+    targetRevision: main
+    path: apps/gitlab
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
